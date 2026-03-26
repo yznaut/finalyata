@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mwm - Movie Watchlist Manager</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <header class="system-top-bar">
+        <div class="top-logo-container">
+            <img src="logo.png" alt="mwm Logo" class="main-logo">
+            <span class="system-name">Movie Watchlist Manager</span>
+        </div>
+    </header>
+
+    <div id="auth-overlay" class="auth-container">
+        <div class="auth-box">
+            <img src="logo.png" alt="Logo" class="auth-logo">
+            <h2 id="auth-title">Sign In</h2>
+            <div class="input-group">
+                <input type="text" id="auth-username" placeholder="Username">
+            </div>
+            <div class="input-group password-wrapper">
+                <input type="password" id="auth-password" placeholder="Password">
+                <i class="fas fa-eye toggle-password" onclick="togglePass('auth-password')"></i>
+            </div>
+            <div id="register-only-fields" style="display: none;">
+                <div class="input-group password-wrapper">
+                    <input type="password" id="auth-confirm-password" placeholder="Confirm Password">
+                    <i class="fas fa-eye toggle-password" onclick="togglePass('auth-confirm-password')"></i>
+                </div>
+                <p class="pw-hint">Min 8 chars, 1 number, 1 symbol (!@#$)</p>
+            </div>
+            <button id="auth-submit-btn" class="primary-btn">Login</button>
+            <p id="auth-toggle-text">Don't have an account? <a href="#" id="toggle-auth">Sign Up</a></p>
+        </div>
+    </div>
+
+    <div id="main-app" class="app-wrapper" style="display: none;">
+        <nav class="sidebar">
+            <ul class="nav-menu">
+                <li onclick="showPage('profile')" class="nav-item" id="nav-profile">Profile</li>
+                <li onclick="showPage('home')" class="nav-item active" id="nav-home">Home</li>
+                <li onclick="showPage('about')" class="nav-item" id="nav-about">About</li>
+            </ul>
+            <div class="sidebar-footer">
+                <span id="display-user">Username</span>
+                <button class="logout-btn" onclick="logout()">Log Out</button>
+            </div>
+        </nav>
+
+        <main class="content">
+            <section id="page-home" class="page">
+                <div class="home-header">
+                    <div class="tab-group">
+                        <button id="tab-watching" class="tab-btn active" onclick="switchTab('Watching')">Watching</button>
+                        <button id="tab-watched" class="tab-btn" onclick="switchTab('Watched')">Watched</button>
+                    </div>
+                    <button id="add-btn-main" class="add-trigger-btn" onclick="openModal('movie-modal')">ADD +</button>
+                </div>
+                <div id="movie-grid" class="movie-grid"></div>
+            </section>
+
+            <section id="page-profile" class="page" style="display:none;">
+                <h2>User Profile</h2>
+                <div class="profile-card">
+                    <p><strong>Username:</strong> <span id="profile-name"></span></p>
+                    <p><strong>Status:</strong> Active User</p>
+                </div>
+            </section>
+
+            <section id="page-about" class="page" style="display:none;">
+                <h2>About the System</h2>
+                <p>The Movie Watchlist Manager is a web-based system designed to help users track their film journey.</p>
+                <h3>Developers</h3>
+                <p>• Developer 1</p>
+                <p>• Developer 2</p>
+                <p>• Developer 3</p>
+            </section>
+        </main>
+    </div>
+
+    <div id="movie-modal" class="modal">
+        <div class="modal-content">
+            <h3>Add New Movie</h3>
+            <label>Title:</label> <input type="text" id="inp-title">
+            <label>Genre:</label> <input type="text" id="inp-genre">
+            <label>Poster URL:</label> <input type="text" id="inp-poster" placeholder="Paste image link here">
+            <label>Date Created:</label> <input type="date" id="inp-date">
+            <div class="modal-btns">
+                <button onclick="saveMovie()" class="primary-btn">ADD</button>
+                <button onclick="closeModal('movie-modal')" class="cancel-btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="rate-modal" class="modal">
+        <div class="modal-content">
+            <h3>Review Movie</h3>
+            <label>Rate:</label>
+            <select id="inp-rating">
+                <option value="1">★☆☆☆☆</option>
+                <option value="2">★★☆☆☆</option>
+                <option value="3">★★★☆☆</option>
+                <option value="4">★★★★☆</option>
+                <option value="5">★★★★★</option>
+            </select>
+            <label>Comment:</label>
+            <textarea id="inp-comment" placeholder="Your thoughts..."></textarea>
+            <div class="modal-btns">
+                <button id="confirm-finish-btn" class="primary-btn">Finish</button>
+                <button onclick="closeModal('rate-modal')" class="cancel-btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

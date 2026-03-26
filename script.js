@@ -4,20 +4,25 @@ let isSignUpMode = false;
 let movieToFinish = null;
 let currentTab = 'Watching';
 
-// --- PASSWORD & AUTH ---
+// PASSWORD SHOW/HIDE
 function togglePass(id) {
-    const el = document.getElementById(id);
-    el.type = el.type === "password" ? "text" : "password";
+    const input = document.getElementById(id);
+    input.type = input.type === "password" ? "text" : "password";
 }
 
+// TOGGLE SIGN IN / SIGN UP
 document.getElementById('toggle-auth').onclick = (e) => {
     e.preventDefault();
     isSignUpMode = !isSignUpMode;
     document.getElementById('auth-title').innerText = isSignUpMode ? "Sign Up" : "Sign In";
     document.getElementById('auth-submit-btn').innerText = isSignUpMode ? "Register" : "Login";
     document.getElementById('register-only-fields').style.display = isSignUpMode ? "block" : "none";
+    document.getElementById('auth-toggle-text').innerHTML = isSignUpMode ? 
+        `Meron na account? <a href="#" onclick="location.reload()">Sign In</a>` : 
+        `Wala pang account? <a href="#" id="toggle-auth">Sign Up</a>`;
 };
 
+// LOGIN / REGISTER LOGIC
 document.getElementById('auth-submit-btn').onclick = () => {
     const user = document.getElementById('auth-username').value;
     const pass = document.getElementById('auth-password').value;
@@ -26,12 +31,12 @@ document.getElementById('auth-submit-btn').onclick = () => {
     if (isSignUpMode) {
         const hasSymbol = /[!@#$%^&*]/.test(pass);
         const hasNumber = /\d/.test(pass);
-        if (pass.length < 8 || !hasSymbol || !hasNumber) return alert("Password needs 8+ chars, 1 number, 1 symbol.");
-        if (pass !== confirm) return alert("Passwords do not match!");
+        if (pass.length < 8 || !hasSymbol || !hasNumber) return alert("Ang password ay dapat 8+ characters, may number at symbol.");
+        if (pass !== confirm) return alert("Hindi magka-match ang password!");
         
         users.push({ user, pass });
         localStorage.setItem('mwm_users', JSON.stringify(users));
-        alert("Account created! Now Sign In.");
+        alert("Registered ka na! Mag-login na.");
         location.reload();
     } else {
         const found = users.find(u => u.user === user && u.pass === pass);
@@ -42,12 +47,12 @@ document.getElementById('auth-submit-btn').onclick = () => {
             document.getElementById('profile-name').innerText = user;
             renderMovies();
         } else {
-            alert("Login failed. Sign up if you don't have an account.");
+            alert("Maling login. Mag-Sign Up muna kung wala pang account.");
         }
     }
 };
 
-// --- SYSTEM LOGIC ---
+// NAVIGATION
 function showPage(id) {
     document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
     document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
@@ -63,6 +68,7 @@ function switchTab(tab) {
     renderMovies();
 }
 
+// MOVIE LOGIC
 function openModal(id) { document.getElementById(id).style.display = 'flex'; }
 function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
@@ -73,7 +79,11 @@ function saveMovie() {
     const date = document.getElementById('inp-date').value;
 
     if (title) {
-        movies.push({ title, genre, poster: poster || 'https://via.placeholder.com/200x280?text=No+Poster', date, status: 'Watching', rating: '', comment: '' });
+        movies.push({ 
+            title, genre, 
+            poster: poster || 'https://via.placeholder.com/200x260?text=No+Poster', 
+            date, status: 'Watching', rating: '', comment: '' 
+        });
         closeModal('movie-modal');
         renderMovies();
     }
@@ -112,9 +122,9 @@ function renderMovies() {
             <img src="${m.poster}" class="movie-poster">
             <h4>${m.title}</h4>
             <p><strong>Genre:</strong> ${m.genre}</p>
-            ${m.status === 'Watched' ? `<p><strong>Rating:</strong> ${m.rating}</p><p><strong>Comment:</strong> ${m.comment}</p>` : ''}
+            ${m.status === 'Watched' ? `<p>Rating: ${m.rating}</p><p>Comment: ${m.comment}</p>` : ''}
             <div style="margin-top:10px; display:flex; gap:10px;">
-                ${m.status === 'Watching' ? `<button onclick="openFinishModal('${m.title}')" class="primary-btn" style="padding:5px">Finish</button>` : ''}
+                ${m.status === 'Watching' ? `<button onclick="openFinishModal('${m.title}')" class="primary-btn" style="padding:5px 15px;">Finish</button>` : ''}
                 <button onclick="deleteMovie('${m.title}')" style="color:red; background:none; border:none; cursor:pointer;">Delete</button>
             </div>
         `;

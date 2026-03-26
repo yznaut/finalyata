@@ -1,41 +1,51 @@
 :root {
     --bg-blue: #002347;
     --white: #ffffff;
-    --light-gray: #f4f7f6;
+    --gray: #f4f7f6;
 }
 
-body { font-family: 'Segoe UI', sans-serif; margin: 0; padding-top: 80px; background: var(--light-gray); }
+body { font-family: 'Segoe UI', sans-serif; margin: 0; padding-top: 80px; background: var(--gray); }
 
-/* THICK TOP BAR */
+/* TOP BAR */
 .system-top-bar {
-    position: fixed; top: 0; left: 0; width: 100%; height: 80px; /* Thicker Bar */
+    position: fixed; top: 0; left: 0; width: 100%; height: 80px;
     background: var(--bg-blue); color: white; display: flex; align-items: center;
     padding: 0 30px; z-index: 2000; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
-
 .top-logo-container { display: flex; align-items: center; gap: 15px; }
-.main-logo { height: 55px; width: auto; } /* Adjust height for logo */
-.system-name { font-size: 1.5rem; letter-spacing: 1px; }
+.main-logo { height: 50px; width: auto; }
+.system-name { font-size: 1.4rem; font-weight: bold; }
 
-/* Auth */
+/* AUTH */
 .auth-container { height: 100vh; background: var(--bg-blue); display: flex; align-items: center; justify-content: center; position: fixed; width: 100%; top: 0; z-index: 3000; }
 .auth-box { background: white; padding: 30px; border-radius: 12px; width: 320px; text-align: center; }
-.auth-logo { height: 60px; margin-bottom: 15px; }
+.auth-logo { height: 60px; margin-bottom: 10px; }
 .input-group { position: relative; margin: 15px 0; }
 .input-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
 .toggle-password { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #777; }
+.pw-hint { font-size: 0.7rem; color: #d9534f; text-align: left; margin: 0; }
 
-/* Layout & Sidebar */
+/* SIDEBAR & CONTENT */
 .app-wrapper { display: flex; height: calc(100vh - 80px); }
-.sidebar { width: 220px; background: white; border-right: 1px solid #ddd; display: flex; flex-direction: column; padding: 20px; }
+.sidebar { width: 200px; background: white; border-right: 1px solid #ddd; display: flex; flex-direction: column; padding: 20px; }
 .nav-item { padding: 15px; cursor: pointer; border-radius: 8px; margin-bottom: 5px; }
 .nav-item.active { background: var(--bg-blue); color: white; }
+.sidebar-footer { border-top: 1px solid #eee; padding-top: 15px; text-align: center; margin-top: auto; }
+.logout-btn { background: #ff4d4d; color: white; border: none; width: 100%; padding: 10px; border-radius: 5px; cursor: pointer; }
 
-/* Cards & Images */
-.movie-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; padding: 10px; }
-.movie-card { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-.movie-poster { width: 100%; height: 280px; object-fit: cover; border-radius: 5px; margin-bottom: 12px; }
+.content { flex: 1; padding: 30px; overflow-y: auto; }
+.home-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.tab-group { background: #ddd; border-radius: 25px; padding: 5px; }
+.tab-btn { border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; background: transparent; }
+.tab-btn.active { background: var(--bg-blue); color: white; }
 
-.primary-btn { background: var(--bg-blue); color: white; border: none; padding: 12px; border-radius: 5px; cursor: pointer; width: 100%; }
+/* MOVIE CARDS */
+.movie-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+.movie-card { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+.movie-poster { width: 100%; height: 260px; object-fit: cover; border-radius: 5px; margin-bottom: 10px; }
+
+/* MODALS */
 .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 4000; align-items: center; justify-content: center; }
-.modal-content { background: white; padding: 25px; width: 350px; border-radius: 10px; display: flex; flex-direction: column; gap: 10px; }
+.modal-content { background: white; padding: 25px; width: 320px; border-radius: 10px; display: flex; flex-direction: column; gap: 10px; }
+.primary-btn { background: var(--bg-blue); color: white; border: none; padding: 12px; border-radius: 5px; cursor: pointer; }
+.cancel-btn { background: #eee; border: none; padding: 10px; border-radius: 5px; cursor: pointer; }
